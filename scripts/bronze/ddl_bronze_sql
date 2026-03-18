@@ -16,6 +16,14 @@ Data Sources   :
 /*
 
 
+IF NOT EXISTS (
+    SELECT 1 
+    FROM sys.schemas 
+    WHERE name = 'BRONZE'
+)
+BEGIN
+    EXEC('CREATE SCHEMA BRONZE');
+END
 if OBJECT_id ('BRONZE.CRM_CUST_INFO', 'u') is not null 
 drop table BRONZE.CRM_CUST_INFO
 
@@ -24,9 +32,10 @@ CREATE TABLE BRONZE.CRM_CUST_INFO(
     CST_KEY nVARCHAR(50),
     CST_FIRSTNAME NVARCHAR(50),
     CST_LASTNAME NVARCHAR(50),
-    CST_MATERIAL_status NVARCHAR(50),
+    CST_MARTIAL_status NVARCHAR(50),
     CST_gender NVARCHAR(50),
-    CST_create_date date
+    CST_create_date date,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
 
 
 
@@ -34,8 +43,9 @@ CREATE TABLE BRONZE.CRM_CUST_INFO(
 )
 -- CHANGING COLUMN NAME CST_MATERIAL_status TO MARTITAL --
 
-EXEC SP_RENAME 'BRONZE.CRM_CUST_INFO.CST_MATERIAL_status' , 'CST_MARTIAL_status', 'COLUMN'
-
+--EXEC SP_RENAME 'BRONZE.CRM_CUST_INFO.CST_MATERIAL_status' , 'CST_MARTIAL_status', 'COLUMN'
+if OBJECT_id ('BRONZE.CRM_PRD_INFO', 'u') is not null 
+drop table BRONZE.CRM_PRD_INFO
 CREATE TABLE BRONZE.CRM_PRD_INFO(
     PRD_ID INT,
     PRD_KEY NVARCHAR(50),
@@ -43,36 +53,53 @@ CREATE TABLE BRONZE.CRM_PRD_INFO(
     PRD_COST INT,
     PRD_LINE NVARCHAR(10),
     PRD_START_DT DATE,
-    PRD_END_DT DATE
+    PRD_END_DT DATE,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+
 
 )
+if OBJECT_id ('BRONZE.CRM_SALES_DETAILS', 'u') is not null 
+drop table BRONZE.CRM_SALES_DETAILS
 CREATE TABLE BRONZE.crm_SALES_DETAILS (
     sls_ord_num NVARCHAR(50),
    sls_prd_key  NVARCHAR(50),
    sls_cust_id int ,
-   sls_order_dt date,
-   sls_ship_dt date,
-   sls_due_dt date,
+   sls_order_dt int,
+   sls_ship_dt int,
+   sls_due_dt int,
    sls_sales int,
    sls_quantity int,
-   sls_price int
+   sls_price int,
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+
 )
 
-
+if OBJECT_id ('BRONZE.erp_cust_az12', 'u') is not null 
+drop table BRONZE.erp_cust_az12
 create table bronze.erp_cust_az12(
     CID nvarchar(50),
     BDATE date,
-    GEN NVARCHAR(15)
+    GEN NVARCHAR(15),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+
 )
-create table bronze.loc_a101(
+if OBJECT_id ('BRONZE.erp_loc_a101', 'u') is not null 
+drop table BRONZE.erp_loc_a101
+create table bronze.erp_loc_a101(
     CID nvarchar(50),
     
-    cntry NVARCHAR(50)
+    cntry NVARCHAR(50),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+
 )
+if OBJECT_id ('BRONZE.erp_cat_g1v2', 'u') is not null 
+drop table BRONZE.erp_cat_g1v2
 create table bronze.erp_cat_g1v2(
     ID nvarchar(50),
     cat nvarchar(50),
     subcat nvarchar(50),
 
-    maintenance NVARCHAR(15)
+    maintenance NVARCHAR(15),
+    dwh_create_date DATETIME2 DEFAULT GETDATE()
+
 )
