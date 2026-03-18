@@ -1,1 +1,18 @@
 
+/*
+====================================================================
+Procedure Name: Create DDL for bronze layer
+
+
+Data Sources   :
+- cust_info.csv
+- prd_info.csv
+- sales_details.csv
+- CUST_AZ12.csv
+- loc_a101.csv
+- px_cat_g1v2.csv
+
+====================================================================
+/*
+
+
