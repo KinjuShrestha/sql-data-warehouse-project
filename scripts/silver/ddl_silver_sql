@@ -1,1 +1,15 @@
 
+if OBJECT_ID('silver.crm_prd_info','u') is not NULL
+drop table silver.crm_prd_info
+
+create table silver.crm_prd_info (
+    prd_id int,
+    prd_key varchar(50),
+    prd_nm varchar(50),
+    prd_cost int,
+    prd_line varchar(10),
+    prd_start_dt DATE,
+    prd_end_dt date,
+dw_created_at datetime2 default GETDATE()
+
+)
