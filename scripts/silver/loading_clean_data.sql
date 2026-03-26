@@ -38,8 +38,8 @@ when 'S' then 'Other Sale'
 end
   PRD_LINE,
   Cast(prd_start_dt as date) as prd_start_dt,
+  DateAdd(day,-1,Cast(LEAD(PRD_START_DT) OVER(Partition BY PRD_KEY ORDER BY PRD_START_DT) as Date))   AS PRD_END_DT
 
-  Cast(LEAD(PRD_START_DT) OVER(Partition BY PRD_KEY ORDER BY PRD_START_DT)   as DATe) AS PRD_END_DT
   
   from [BRONZE].[CRM_PRD_INFO]
 
