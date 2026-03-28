@@ -29,3 +29,11 @@ create table SILVER.sales_details(
     sls_price int,
     dw_created_at DATETIME2 default GETDATE()
 )
+
+if object_id('SILVER.erp_cust_az12','u') is not null 
+drop table SILVER.erp_cust_az12;
+Create table SILVER.erp_cust_az12(
+    cid varchar(50),
+    bdate date,
+    gen varchar(15)
+)
