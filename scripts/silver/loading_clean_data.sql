@@ -94,6 +94,30 @@ ROW_NUMBER() Over(partition by sls_ord_num order by sls_ord_num desc ) as rank
 
 
 
+Truncate table Silver.erp_cust_az12;
+Insert into Silver.erp_cust_az12(
+    cid,
+    bdate,
+    gen
+)
+
+select 
+
+case when cid like 'NAS%' then SUBSTRING(cid,4,len(cid)) 
+else cid 
+end 
+as cid ,
+case when bdate > getdate() or len(bdate)!=10 then null
+ else bdate
+ end as bdate,
+case   when UPPER(TRIM(GEN)) like 'M%' then 'Male' 
+ when UPPER(TRIM(GEN)) like 'F%' then 'Female' 
+ else 
+ 'n/a'
+ end  as gen
+
+
+ from bronze.erp_cust_az12
 
 
 
