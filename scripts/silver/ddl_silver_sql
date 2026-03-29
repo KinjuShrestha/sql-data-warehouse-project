@@ -48,3 +48,17 @@ create table silver.erp_loc_a101(
     cntry varchar(50),
     dwh_created_at DATETIME2 default getdate()
 )
+
+
+
+if object_id('silver.erp_cat_g1v2','u') is not NULL
+drop table silver.erp_cat_g1v2;
+
+create table SILVER.erp_cat_g1v2(
+    id VARCHAR(50),
+    cat varchar(50),
+    subcat varchar(50),
+    maintenance VARCHAR(50),
+    dwh_created_at DATETIME2 DEFAULT GETDATE()
+
+)
