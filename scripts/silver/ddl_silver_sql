@@ -39,3 +39,12 @@ Create table SILVER.erp_cust_az12(
     gen varchar(15),
     dwh_created_at datetime2 default GETDATE()
 )
+
+if object_id('silver.erp_loc_a101','u') is not null
+drop table silver.erp_loc_a101;
+
+create table silver.erp_loc_a101(
+    cid varchar(50),
+    cntry varchar(50),
+    dwh_created_at DATETIME2 default getdate()
+)
