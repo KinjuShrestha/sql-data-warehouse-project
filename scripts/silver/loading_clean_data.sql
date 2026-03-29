@@ -122,3 +122,24 @@ case   when UPPER(TRIM(GEN)) like 'M%' then 'Male'
 
 
 
+truncate table  silver.erp_loc_a101;
+Insert into  silver.erp_loc_a101(
+cid,
+cntry
+)
+
+
+
+select 
+REPLACE(CID,'-','') AS CID,
+case when 
+len(Replace(Trim(cntry),CHAR(13),''))=0 then 'N/A'
+when Replace(Trim(cntry),CHAR(13),'') in ('USA','UNITED STATES','US') then 'United States'
+ when Replace(Trim(cntry),CHAR(13),'') in ('Germany','DE') then 'Germany'
+ else Replace(Trim(cntry),CHAR(13),'')
+ end as cntry
+ from bronze.erp_loc_a101
+
+
+
+
