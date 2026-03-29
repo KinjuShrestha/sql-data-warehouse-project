@@ -48,9 +48,12 @@ end
 
 --fix ord num ,sls__ord_dt - 0 value,sls_ship_dt ship dt > orderdt,due dt fine , 
 --sls sales (-ve value, 0,null), slsprice (-ve,null)
+
+
 Truncate table  SILVER.sales_details;
 Insert into SILVER.sales_details(
      sls_ord_num,
+     sls_cat,
 sls_prd_key,
 sls_cust_id,
 sls_order_dt,
@@ -62,6 +65,7 @@ sls_price
 )
 select
  sls_ord_num,
+SUBSTRING(TRIM(sls_prd_key),0,6) as sls_cat,
 sls_prd_key,
 sls_cust_id,
 case when sls_order_dt=0 or len(sls_order_dt)!=8 then null 
@@ -90,7 +94,7 @@ end as sls_price
 *,
 ROW_NUMBER() Over(partition by sls_ord_num order by sls_ord_num desc ) as rank
 
- from BRONZE.CRM_Sales_details)t where rank =1  
+ from BRONZE.CRM_Sales_details)t where rank =1
 
 
 
