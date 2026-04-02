@@ -1,0 +1,22 @@
+Create View Gold.Dim_Products as 
+Select 
+ROW_NUMBER() Over(order by p.prd_key) as product_key,
+p.prd_id as product_id,
+p.prd_key as product_number,
+p.cat_id as  product_category_id,
+p.prd_nm as  product_name,
+p.prd_cost as cost,
+p.prd_line as  product_line,
+p.prd_start_dt as start_date
+,c.cat as category,
+c.subcat as subcategory,
+c.maintenance as maintenance
+from silver.crm_prd_info p 
+LEFT JOIN silver.erp_cat_g1v2 c 
+on  p.cat_id = c.id
+
+
+ where p.prd_end_dt is NULL 
+
+;
+
