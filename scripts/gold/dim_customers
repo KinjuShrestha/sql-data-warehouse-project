@@ -1,0 +1,21 @@
+Create View gold.dim_customers as (
+SELECT 
+ROW_NUMBER() Over(Order by c.cst_key) as customer_key,
+c.cst_id as customer_id,
+c.cst_key as customer_number,
+c.cst_firstname as customer_firstname,
+c.cst_lastname as  customer_lastname,
+c.CST_MARTIAL_status as maritial_status,
+case when c.cst_gender!='n/a' then c.cst_gender
+else coalesce(az.gen,'n/a')
+end as  gender,
+l.cntry as country,
+az.bdate as birthdate
+from silver.crm_cust_info c 
+left join 
+silver.erp_loc_a101 l 
+on c.cst_key= l.cid 
+left join 
+silver.erp_cust_az12 az on 
+c.cst_key =az.cid
+)
