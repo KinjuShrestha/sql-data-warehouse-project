@@ -124,7 +124,22 @@ case   when UPPER(TRIM(GEN)) like 'M%' then 'Male'
  from bronze.erp_cust_az12
 
 
+Truncate table silver.erp_cat_g1v2;
+Insert into silver.erp_cat_g1v2(
+    id,cat,subcat,maintenance
+)
+SELECT  
+replace(id,'_','-') as id,
+      cat
+      ,subcat
+      ,
+      case when maintenance like 'Y%' THEN 'YES'
+      ELSE 'NO'
+      END AS
+      maintenance
+  FROM [DATAWAREHOUSE].[BRONZE].[erp_cat_g1v2]
 
+    
 
 truncate table  silver.erp_loc_a101;
 Insert into  silver.erp_loc_a101(
