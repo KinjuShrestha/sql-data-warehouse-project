@@ -1,0 +1,37 @@
+-- find the total sales
+select sum(sales_amount) from gold.fact_sales
+
+-- find how many items are sold
+select sum(quantity) from gold.fact_sales
+
+-- find the avg sp
+select avg(price) from gold.fact_sales
+
+-- total no of orders 
+
+select  count(order_number) from gold.fact_sales
+select  count( distinct order_number) from gold.fact_sales
+
+-- total no of products 
+select   count(distinct product_key) from gold.fact_sales
+
+-- total no of customers
+select  count(customer_key) from gold.fact_sales
+
+-- total no of customers that has placed order
+select  count(distinct customer_key) from gold.fact_sales
+
+-- show in report format
+
+Select 'Total Sales' as Measure_name, sum(sales_amount) as measure_value from gold.fact_sales
+union all
+Select 'Total Quantity', sum(quantity)  from gold.fact_sales
+union all
+Select 'Avg Price' ,  avg(price)  from gold.fact_sales
+union all
+Select 'Total No of orders' ,  count(distinct order_number)  from gold.fact_sales
+union all 
+Select 'Total No of products' ,  count(product_name)  from gold.dim_products
+union all
+Select 'Total No of customers' ,  count( customer_key)  from gold.dim_customers
+
