@@ -35,3 +35,46 @@ Select 'Total No of products' ,  count(product_name)  from gold.dim_products
 union all
 Select 'Total No of customers' ,  count( customer_key)  from gold.dim_customers
 
+-- find total customers by countries 
+SELECT country,count(*) as total_customers_by_country 
+ from gold.dim_customers group by country 
+ order by total_customers_by_country desc  ; 
+
+-- find total customers by countries 
+Select gender,count(*) as total_by_gender from gold.dim_customers group by gender;
+
+-- find total customers by countries 
+Select category,count(*) as total_product_bycategory from gold.dim_products group by category;
+
+-- total revune for each category
+Select p.category, sum(s.sales_amount) as reveunue
+from  gold.fact_sales s
+left join gold.dim_products p
+on p.product_key = s.product_key
+ group by category;
+
+-- total reveune for each country
+Select c.country, sum(s.sales_amount) as total_revenue_per_country
+from gold.fact_sales s
+left join  gold.dim_customers c
+on c.customer_key = s.customer_key
+ group by country;
+
+-- find total revune genreadtd by each customer
+Select c.customer_key,c.first_name,
+ sum(s.sales_amount) as total_revenue_per_customer
+from gold.fact_sales s 
+left join gold.dim_customers c 
+on c.customer_key = s.customer_key
+ group by c.customer_key, c.first_name
+ order by total_revenue_per_customer desc;
+
+ -- total disturbution of sold items across country 
+ Select c.country, 
+ sum(s.quantity) as total_product_sold_per_country
+from  gold.fact_sales s 
+left join gold.dim_customers c 
+on  s.customer_key  = c.customer_key
+group by c.country
+order by total_product_sold_per_country desc;
+
