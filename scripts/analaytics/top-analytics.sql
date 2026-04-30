@@ -98,3 +98,21 @@ when current_sales-Lag(current_sales) Over(Partition by product_name Order by ye
 ELSE 'no change'
 end 
  from cte_prd_sales order by product_name
+
+
+
+
+-- which categories contrihue most to overall sale
+
+With cte_category_sale as (
+    Select p.category,
+    sum(s.sales_amount) total_sales
+    from gold.dim_products p left join  gold.fact_sales s 
+    
+    on p.product_key = s.product_key
+    where category is not null
+    group by category
+)
+select category,sum(total_sales ) over() sum
+, CAST(total_sales as float) /(sum(total_sales ) over())*100 as percentage
+ from cte_category_sale 
